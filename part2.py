@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+import sys
 
 def reachable(G, curCol, curRow, Nc, Nr):
     tempCol = curCol + 1
@@ -13,7 +14,7 @@ def reachable(G, curCol, curRow, Nc, Nr):
         while(i >= tempRow - move):
             if(i < 0):
                 break
-            print(i, tempCol)
+            #print(i, tempCol)
             if(G[i][tempCol] == 1):
                 points.append(tuple([i, tempCol]))
             i = i - 1
@@ -41,7 +42,9 @@ if __name__ == '__main__':
     targets = []
 
 #Read in Nr, Nc, and target coordinates from the file
-    with open('in01.txt') as f:
+
+    filename = sys.argv[1]
+    with open(filename) as f:
         for l in f:
             if counter == 0:
                 tempR, tempC = l.split()
@@ -68,7 +71,7 @@ if __name__ == '__main__':
 
 #Find the max value from the valueList, which should be the max targets hit in an optimum route
     valueList = []
-    valueList = findValue(0, 0, (Nr/2)+1, valueList, Nc, grid, Nr)
+    valueList = findValue(0, 0, (Nr/2), valueList, Nc, grid, Nr)
     maxVal = max(valueList)
     print
     print(valueList)
