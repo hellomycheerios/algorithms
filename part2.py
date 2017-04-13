@@ -1,14 +1,18 @@
 #!/usr/bin/python3
 
-def reachable(G, curCol, curRow):
+def reachable(G, curCol, curRow, Nc, Nr):
     tempCol = curCol + 1
     tempRow = curRow
     move = 1
-    i = tempRow + move
     points = []
 
     while(tempCol != Nc):
+        i = tempRow + move
+        if(i > Nr-1):
+            i = Nr-1
         while(i >= tempRow - move):
+            if(i == 0):
+                break
             print(i, tempCol)
             if(G[i][tempCol] == 1):
                 points.append(tuple([i, tempCol]))
@@ -18,13 +22,14 @@ def reachable(G, curCol, curRow):
 
     return points
 
-def findValue(value, curCol, curRow, valueList, Nc, G):
-    points = reachable(G, curCol, curRow)
+def findValue(value, curCol, curRow, valueList, Nc, G, Nr):
+    points = reachable(G, curCol, curRow, Nc, Nr)
     for reachablePoint in points:
-        findValue(value+1, reachablePoint[1], reachablePoint[0])
+        findValue(value+1, reachablePoint[1], reachablePoint[0], valueList, Nc, G, Nr)
     if(curCol == Nc-1 or len(points) == 0):
         valueList.append(value)
-        return valueList
+
+    return valueList
 
 
 
@@ -59,7 +64,9 @@ if __name__ == '__main__':
         grid[aTuple[0]][aTuple[1]] = 1
 
     valueList = []
-    val = findValue(0, 0, (Nr/2)+1, valueList, Nc, grid)
-
-    print(grid)
-    print(val)
+    valueList = findValue(0, 0, (Nr/2)+1, valueList, Nc, grid, Nr)
+    maxVal = max(valueList)
+    print
+    print(valueList)
+    print
+    print(maxVal)
