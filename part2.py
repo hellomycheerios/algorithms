@@ -73,7 +73,4 @@ if __name__ == '__main__':
     valueList = []
     valueList = findValue(0, 0, (Nr/2), valueList, Nc, grid, Nr)
     maxVal = max(valueList)
-    print
-    print(valueList)
-    print
     print(maxVal)
